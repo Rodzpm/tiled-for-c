@@ -1,0 +1,54 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "map.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Interiors_free_16x16.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Room_Builder_free_16x16.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1.5
+        },
+        "map.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 45.90909090909092,
+                "y": 91.54545454545455
+            }
+        }
+    },
+    "last.exportedFilePath": "C:/Users/allan/OneDrive/Bureau/myrpg",
+    "last.imagePath": "C:/Users/allan/Downloads/Modern_Interiors_Free_v2.2/Modern tiles_Free/Interiors_free/16x16",
+    "lastUsedTilesetExportFilter": "Tous les Fichiers (*)",
+    "map.height": 10,
+    "map.lastUsedExportFilter": "Tous les Fichiers (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 10,
+    "openFiles": [
+        "Interiors_free_16x16.tsx",
+        "Room_Builder_free_16x16.tsx",
+        "map.tmx"
+    ],
+    "project": "myrpg.tiled-project",
+    "recentFiles": [
+        "Interiors_free_16x16.tsx",
+        "Room_Builder_free_16x16.tsx",
+        "map.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.useTransparentColor": true
+}
