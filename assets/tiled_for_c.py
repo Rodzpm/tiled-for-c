@@ -21,19 +21,24 @@ class Layer:
         self.name = name
         self.id = id
         self.data = data
-    def get_bloc_img(self, pos, source):
-        num = self.data[self.size[1] * pos[0] + pos[1]]
-        print(num)
+    def get_sprite_pos(self, num, source):
         im = cv2.imread(source)
         h, w, a = im.shape
-        ny = h // 16
-        nx = w // 16
-        sy = num // nx
-        sx = num % nx
-        img = Image.open(source)
-        imgcrop = img.crop((sx * 16, sy * 16, sx * 16 + 16, sy * 16 + 16))
-        imgcrop.show()
-          
+        x = (num - 1) % (w // 16) * 16
+        y = math.floor((num - 1) / (w // 16)) * 16
+        return (x, y)
+    def get_sprite_tileset(self, num, tilesets):
+        for i in range(len(tilesets) - 1, -1, -1):
+            if num >= tilesets[i][0]:
+                return i
+    def get_layer_data(self, f, tilesets):
+        for sprite in self.data:
+            if not sprite:
+                f.write("0\n")
+                continue
+            tileset = self.get_sprite_tileset(sprite, tilesets)
+            pos = self.get_sprite_pos(sprite - tilesets[tileset][0] + 1, tilesets[tileset][1])
+            f.write(str(tileset) + " " + str(pos[0]) + " " + str(pos[1]) + "\n")
 
 def get_map():
     map = sys.argv[1]
@@ -43,10 +48,18 @@ def get_map():
         layer = Layer(l["width"], l["height"], l["name"], l["id"], l["data"])
         res.layers.append(layer)
     for t in j["tilesets"]:
-        res.tilesets.append([t["firstgid"], t["source"]])
+        res.tilesets.append([t["firstgid"], t["source"].replace("tsx", "png")])
     return res
 
     
 map = get_map()
-map.layers[0].get_bloc_img((0, 0), "Room_Builder_free_16x16.png")
-
+f = open("res.map", "w")
+f.write("#width\n" + str(map.size[0]) + "\n")
+f.write("#height\n" + str(map.size[1]) + "\n")
+f.write("#nb_tilesets\n" + str(len(map.tilesets)) + "\n")
+f.write("#tilesets\n")
+for sheet in map.tilesets:
+    f.write(sheet[1] + "\n")
+for layer in map.layers:
+    f.write("#layer\n")
+    layer.get_layer_data(f, map.tilesets)
