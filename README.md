@@ -1,4 +1,4 @@
-# tiled-for-c
+# Tiled for C
 
 ## How to use it
 
