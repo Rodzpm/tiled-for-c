@@ -1,6 +1,6 @@
 # tiled-for-c
 
-#How to use it
+## How to use it
 
 - créer une map avec Tiled et l'exporter en json
 - déplacer la map dans le dossier assets ainsi que tous les tilesets utilisés
