@@ -10,11 +10,7 @@ class Map:
         self.tile_size = (twidth,theight)
         self.layers = list()
         self.tilesets = list()
-    def print_data(self):
-        print("Map (%dx%d) with tiles (%dx%d)" % (self.size[0], self.size[1], self.tile_size[0], self.tile_size[1]))
-        for l in self.layers:
-            print("Layer %s (%dx%d) id %d" % (l.name, l.size[0], l.size[1], l.id))
-            print(l.data)
+
 class Layer:
     def __init__(self, width, height, name, id, data):
         self.size = (width, height)
@@ -31,14 +27,11 @@ class Layer:
         for i in range(len(tilesets) - 1, -1, -1):
             if num >= tilesets[i][0]:
                 return i
-    def get_layer_data(self, f, tilesets):
-        for sprite in self.data:
-            if not sprite:
-                f.write("0\n")
-                continue
-            tileset = self.get_sprite_tileset(sprite, tilesets)
-            pos = self.get_sprite_pos(sprite - tilesets[tileset][0] + 1, tilesets[tileset][1])
-            f.write(str(tileset) + " " + str(pos[0]) + " " + str(pos[1]) + "\n")
+    def get_layer_data(self, f, tilesets, map):
+        for y in range(map.size[1]):
+            for x in range(map.size[0]):
+                if (self.data[y * map.size[0] + x] != 0):
+                    f.write(str(x * 16) + " " + str(y * 16) + "\n")
 
 def get_map():
     map = sys.argv[1]
@@ -53,13 +46,7 @@ def get_map():
 
     
 map = get_map()
-f = open("res.map", "w")
-f.write("#width\n" + str(map.size[0]) + "\n")
-f.write("#height\n" + str(map.size[1]) + "\n")
-f.write("#nb_tilesets\n" + str(len(map.tilesets)) + "\n")
-f.write("#tilesets\n")
-for sheet in map.tilesets:
-    f.write(sheet[1] + "\n")
+f = open("res.coll", "w")
 for layer in map.layers:
-    f.write("#layer\n")
-    layer.get_layer_data(f, map.tilesets)
+    if layer.name == "Collision":
+        layer.get_layer_data(f, map.tilesets, map)
